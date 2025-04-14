@@ -156,6 +156,7 @@
     navigationSection();
     mobileMenuOutsideClick();
     detectDayNightMode();
+    initializeAds();
   });
 })();
 
@@ -190,3 +191,22 @@ function detectDayNightMode() {
     enableDarkMode();
   }
 }
+
+function initializeAds() {
+  (adsbygoogle = window.adsbygoogle || []).push({});
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var adElements = document.getElementsByClassName('adsbygoogle');
+  for (var i = 0; i < adElements.length; i++) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+    observer.observe(adElements[i]);
+  }
+});
